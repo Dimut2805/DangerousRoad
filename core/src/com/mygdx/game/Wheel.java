@@ -1,21 +1,20 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
 
 public class Wheel implements Draw {
-    private Texture wheel;
+    private Texture texture;
+    private TextureRegion textureRegion;
     private Rectangle rectangle;
 
     Wheel(float x, float y, int size) {
-        wheel = new Texture("wheel.png");
+        texture = new Texture("wheel.png");
+        textureRegion = new TextureRegion(texture, x, y, size, size);
         rectangle = new Rectangle(x, y, size, size);
-        sprite.setTexture(wheel);
-        sprite.setPosition(x, y);
     }
 
     boolean onLand() {
@@ -29,7 +28,7 @@ public class Wheel implements Draw {
     @Override
     public void draw() {
         batch.begin();
-        sprite.draw(batch);
+        batch.draw(texture, 0, 0, 0, 0, 50, 50, 1f, 2.0f, 45f, 0, 0, 0, 0, false, false);
         batch.end();
         shapeRendered.begin(ShapeRenderer.ShapeType.Line);
         shapeRendered.setColor(0, 1, 0, 1);
