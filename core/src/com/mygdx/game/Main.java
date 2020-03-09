@@ -19,6 +19,7 @@ public class Main extends ApplicationAdapter {
     private Map map;
     private Pedal leftPedal;
     private Pedal rightPedal;
+    private RoadHitBox roadHitBox;
 
     @Override
     public void create() {
@@ -27,6 +28,7 @@ public class Main extends ApplicationAdapter {
         camera.setToOrtho(false, 800, 400);
         car = new Car(40, 400, 300, 100);
         map = new Map();
+        roadHitBox = new RoadHitBox();
         leftPedal = new Pedal(10, 10, 50, 150);
         rightPedal = new Pedal(Gdx.graphics.getWidth() - 60, 10, 50, 150);
     }
@@ -37,6 +39,7 @@ public class Main extends ApplicationAdapter {
         Gdx.graphics.getGL20().glClear( GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT );
         camera.update();
         map.draw();
+        roadHitBox.showRoadHitBox();
         car.draw();
         stage.draw();
         if (Gdx.input.isTouched()) {
