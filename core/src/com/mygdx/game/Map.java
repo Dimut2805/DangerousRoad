@@ -12,7 +12,7 @@ public class Map implements Draw {
     @Override
     public void draw() {
         batch.begin();
-        batch.draw(mapTexture, 0, -250);
+        batch.draw(mapTexture, 0, 0);
         batch.end();
     }
 }

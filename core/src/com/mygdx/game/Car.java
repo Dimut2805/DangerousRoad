@@ -3,6 +3,7 @@ package com.mygdx.game;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 
 
 public class Car implements Draw {
@@ -17,11 +18,6 @@ public class Car implements Draw {
         leftWheel = new Wheel(body.x + 33, body.y - 28, 50);
         rightWheel = new Wheel(body.x + body.width - 30 - 50, body.y - 23, 50);
     }
-
-    public Wheel getLeftWheel() {
-        return leftWheel;
-    }
-
 
     void moveRight() {
         body.x += 5;
@@ -39,10 +35,6 @@ public class Car implements Draw {
         body.y -= 10;
         leftWheel.getRectangle().y -= 10;
         rightWheel.getRectangle().y -= 10;
-    }
-
-    public Wheel getRightWheel() {
-        return rightWheel;
     }
 
     @Override
