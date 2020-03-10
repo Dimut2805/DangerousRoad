@@ -12,21 +12,23 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 public class Wheel implements Draw {
     private TextureRegion textureRegion;
     private Rectangle rectangle;
-    Stage stage;
+    Image wheel;
 
     Wheel(float x, float y, int size) {
-        stage = new Stage(new ScreenViewport());
         rectangle = new Rectangle(x, y, size, size);
-        Image wheel = new Image(new Texture("wheel.png")) {{
+        wheel = new Image(new Texture("wheel.png")) {{
             setPosition(rectangle.x, rectangle.y);
             setWidth(rectangle.width);
             setHeight(rectangle.height);
         }};
-        stage.addActor(wheel);
     }
 
     boolean onLand() {
         return rectangle.y <= 130;
+    }
+
+    public Image getWheel() {
+        return wheel;
     }
 
     public Rectangle getRectangle() {
@@ -35,7 +37,7 @@ public class Wheel implements Draw {
 
     @Override
     public void draw() {
-        stage.draw();
+        wheel.setPosition(rectangle.x, rectangle.y);
         shapeRendered.begin(ShapeRenderer.ShapeType.Line);
         shapeRendered.setColor(0, 1, 0, 1);
         shapeRendered.rect(rectangle.x, rectangle.y, rectangle.width, rectangle.height);

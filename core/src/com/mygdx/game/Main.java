@@ -41,6 +41,8 @@ public class Main extends ApplicationAdapter {
         map.draw();
         roadHitBox.showRoadHitBox();
         car.draw();
+        stage.addActor(car.getLeftWheel().getWheel());
+        stage.addActor(car.getRightWheel().getWheel());
         stage.draw();
         if (Gdx.input.isTouched()) {
             Vector3 touchPos = new Vector3();
@@ -57,7 +59,6 @@ public class Main extends ApplicationAdapter {
         }
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) car.moveLeft();
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) car.moveRight();
-        camera.update();
     }
 
     @Override
