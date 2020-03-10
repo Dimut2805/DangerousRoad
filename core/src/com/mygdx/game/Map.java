@@ -6,13 +6,13 @@ public class Map implements Draw {
     private Texture mapTexture;
 
     Map() {
-        mapTexture = new Texture("road.jpg");
+        mapTexture = new Texture("road.png");
     }
 
     @Override
     public void draw() {
         batch.begin();
-        batch.draw(mapTexture, 0, 0);
+        batch.draw(mapTexture, 300, 300, 300,300);
         batch.end();
     }
 }
