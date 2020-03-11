@@ -21,34 +21,19 @@ public class Car implements Draw {
         rightWheel = new Wheel(body.x + body.width - 30 - 50, body.y - 23, 50);
     }
 
-    void moveRight() {
-        body.x += 5;
-        leftWheel.getRectangle().x += 5;
-        leftWheel.getWheel().setOrigin(leftWheel.getWheel().getWidth()/2,leftWheel.getWheel().getHeight()/2);
-        leftWheel.getWheel().rotateBy(-15);
-        rightWheel.getRectangle().x += 5;
-        rightWheel.getWheel().setOrigin(rightWheel.getWheel().getWidth()/2,rightWheel.getWheel().getHeight()/2);
-        rightWheel.getWheel().rotateBy(-15);
+    public Rectangle getBody() {
+        return body;
     }
 
-    void moveLeft() {
-        body.x -= 5;
-        leftWheel.getRectangle().x -= 5;
-        leftWheel.getWheel().setOrigin(leftWheel.getWheel().getWidth()/2,leftWheel.getWheel().getHeight()/2);
-        leftWheel.getWheel().rotateBy(15);
-        rightWheel.getRectangle().x -= 5;
-        rightWheel.getWheel().setOrigin(rightWheel.getWheel().getWidth()/2,rightWheel.getWheel().getHeight()/2);
-        rightWheel.getWheel().rotateBy(15);
-    }
 
     public Wheel getRightWheel() {
         return rightWheel;
     }
 
     void drop() {
-        body.y -= 10;
-        leftWheel.getRectangle().y -= 10;
-        rightWheel.getRectangle().y -= 10;
+        body.y -= 1;
+        leftWheel.getRectangle().y -= 1;
+        rightWheel.getRectangle().y -= 1;
     }
 
     public Wheel getLeftWheel() {

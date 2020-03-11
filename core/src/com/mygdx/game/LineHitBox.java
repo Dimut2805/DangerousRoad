@@ -14,6 +14,15 @@ public class LineHitBox {
         this.y2 = y2;
     }
 
+    int getSlant() {
+        return (y2 - y1) / (x2 - x1);
+    }
+
+    int findY(int x) {
+        System.out.println(((-x * y2) + (x * y1) + (x1 * y2) + (-y1 * x2)) / (x1 - x2));
+        return ((-x * y2) + (x * y1) + (x1 * y2) + (-y1 * x2)) / (x1 - x2);
+    }
+
     public int[] leftPoint() {
         return new int[]{x1, y1};
     }
