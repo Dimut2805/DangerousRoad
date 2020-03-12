@@ -23,9 +23,9 @@ public class RelationshipCar {
 
     void moveRight() {
         if (onLand && lineOnLand.y1 != lineOnLand.y2) {
-            car.getBody().y = lineOnLand.findY((int) (car.getBody().x + speed))+245;
+            car.getBody().y = lineOnLand.findY((int) (car.getBody().x + speed));
             car.getRightWheel().getRectangle().y = lineOnLand.findY((int) (car.getRightWheel().getRectangle().x + speed));
-            car.getLeftWheel().getRectangle().y = lineOnLand.findY((int) (car.getLeftWheel().getRectangle().x + speed)+185);
+            car.getLeftWheel().getRectangle().y = lineOnLand.findY((int) (car.getLeftWheel().getRectangle().x + speed));
         }
         //System.out.println(car.getBody().y);
         car.getBody().x += speed;
@@ -53,7 +53,7 @@ public class RelationshipCar {
         int x = (int) wheel.getX();
         int y = (int) wheel.getY();
         for (LineHitBox lineHitBox : lineHitBoxes) {
-            if (x >= lineHitBox.x1 && x + wheel.getImageWidth() <= lineHitBox.x2) {
+            if (x + wheel.getImageWidth() >= lineHitBox.x1 && x + wheel.getImageWidth() <= lineHitBox.x2) {
                 if (y - lineHitBox.y1 <= lineHitBox.getSlant() * (x + wheel.getImageWidth() - lineHitBox.x1)) {
                     onLand = true;
                     lineOnLand = lineHitBox;

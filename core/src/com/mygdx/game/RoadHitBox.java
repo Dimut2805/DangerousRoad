@@ -12,9 +12,9 @@ public class RoadHitBox {
     RoadHitBox(Car car) {
         this.car = car;
         lineHitBoxes = new LineHitBox[]{
-                new LineHitBox(0, 200, 200, 200),
-                new LineHitBox(200, 200, 300, 300),
-                new LineHitBox(300, 300, 500, 300)
+                new LineHitBox(0, 150, 200, 200),
+                new LineHitBox(200, 200, 240, 300),
+                new LineHitBox(240, 300, 500, 400)
         };
     }
 

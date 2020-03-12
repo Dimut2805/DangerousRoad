@@ -18,7 +18,7 @@ public class Wheel implements Draw {
         rectangle = new Rectangle(x, y, size, size);
         wheel = new Image(new Texture("wheel.png")) {{
             setPosition(rectangle.x, rectangle.y);
-            setWidth(rectangle.width);
+            setWidth(rectangle.width+5);
             setHeight(rectangle.height);
         }};
     }
