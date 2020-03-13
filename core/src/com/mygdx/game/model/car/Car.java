@@ -1,11 +1,10 @@
-package com.mygdx.game;
+package com.mygdx.game.model.car;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-
-import java.util.Arrays;
+import com.mygdx.game.Draw;
+import com.mygdx.game.usemodel.map.RoadHitBox;
 
 
 public class Car implements Draw {
@@ -14,11 +13,11 @@ public class Car implements Draw {
     private Wheel leftWheel;
     private Wheel rightWheel;
 
-    Car(int x, int y, int width, int height) {
-        body = new Rectangle(x, y, width, height);
+    public Car(int x, int width, int height) {
+        body = new Rectangle(x, RoadHitBox.findLineHitBox(x).findY(x), width, height);
         carTexture = new Texture("car.png");
-        leftWheel = new Wheel(body.x + 33, body.y - 28, 50);
-        rightWheel = new Wheel(body.x + body.width - 30 - 50, body.y - 23, 50);
+        leftWheel = new Wheel(body.x + 33, 50);
+        rightWheel = new Wheel(body.x + body.width - 30 - 50, 50);
     }
 
     public Rectangle getBody() {
@@ -28,12 +27,6 @@ public class Car implements Draw {
 
     public Wheel getRightWheel() {
         return rightWheel;
-    }
-
-    void drop() {
-        body.y -= 1;
-        leftWheel.getRectangle().y -= 1;
-        rightWheel.getRectangle().y -= 1;
     }
 
     public Wheel getLeftWheel() {

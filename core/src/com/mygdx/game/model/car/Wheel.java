@@ -1,30 +1,32 @@
-package com.mygdx.game;
+package com.mygdx.game.model.car;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.mygdx.game.Draw;
+import com.mygdx.game.usemodel.map.RoadHitBox;
 
 
 public class Wheel implements Draw {
-    private TextureRegion textureRegion;
     private Rectangle rectangle;
-    Image wheel;
+    private Image wheel;
 
-    Wheel(float x, float y, int size) {
-        rectangle = new Rectangle(x, y, size, size);
+    Wheel(float x, int size) {
+        rectangle = new Rectangle(x, RoadHitBox.findLineHitBox(x).findY(x), size, size);
         wheel = new Image(new Texture("wheel.png")) {{
             setPosition(rectangle.x, rectangle.y);
-            setWidth(rectangle.width+5);
+            setWidth(rectangle.width + 5);
             setHeight(rectangle.height);
         }};
     }
 
-    boolean onLand() {
-        return rectangle.y <= 130;
+    public float[] getLeftPoint() {
+        return new float[]{rectangle.x, rectangle.y};
+    }
+
+    public float[] getRightPoint() {
+        return new float[]{rectangle.x + rectangle.width, rectangle.y};
     }
 
     public Image getWheel() {

@@ -1,12 +1,13 @@
-package com.mygdx.game;
+package com.mygdx.game.model.map;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.mygdx.game.Draw;
 
 public class Map implements Draw {
     private Texture mapTexture;
 
-    Map() {
-        mapTexture = new Texture("roadCYS.png");
+    public Map() {
+        mapTexture = new Texture("road.png");
     }
 
     @Override
