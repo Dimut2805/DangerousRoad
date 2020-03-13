@@ -3,21 +3,33 @@ package com.mygdx.game.model.car;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.mygdx.game.Draw;
+import com.mygdx.game.model.map.LineHitBox;
 import com.mygdx.game.usemodel.map.RoadHitBox;
 
 
 public class Car implements Draw {
-    private Texture carTexture;
     private Rectangle body;
     private Wheel leftWheel;
     private Wheel rightWheel;
+    private Image car;
+    private LineHitBox lineHitBox;
 
-    public Car(int x, int width, int height) {
+    public Car(float x, final float width, final float height) {
         body = new Rectangle(x, RoadHitBox.findLineHitBox(x).findY(x), width, height);
-        carTexture = new Texture("car.png");
         leftWheel = new Wheel(body.x + 33, 50);
         rightWheel = new Wheel(body.x + body.width - 30 - 50, 50);
+        lineHitBox = new LineHitBox(leftWheel.getWheel().getX(), leftWheel.getWheel().getY() + 50, rightWheel.getWheel().getX() + 50, rightWheel.getWheel().getY() + 50);
+        car = new Image(new Texture("car.png")) {{
+            setPosition(leftWheel.getRectangle().x, leftWheel.getRectangle().y);
+            setWidth(width);
+            setHeight(height);
+        }};
+    }
+
+    public Image getCarImage() {
+        return car;
     }
 
     public Rectangle getBody() {
@@ -37,12 +49,43 @@ public class Car implements Draw {
     public void draw() {
         leftWheel.draw();
         rightWheel.draw();
-        batch.begin();
-        batch.draw(carTexture, body.x, body.y, body.width, body.height);
-        batch.end();
-        shapeRendered.begin(ShapeRenderer.ShapeType.Line);
-        shapeRendered.setColor(0, 1, 0, 1);
-        shapeRendered.rect(body.x, body.y, body.width, body.height);
-        shapeRendered.end();
+        lineHitBox.setPosition(leftWheel.getRectangle().x - 30, leftWheel.getRectangle().y + 50, rightWheel.getRectangle().x + 50 + 30, rightWheel.getRectangle().y + 50);
+        car.setPosition(lineHitBox.getX1(), lineHitBox.getY1() - 23);
+        car.setRotation(lineHitBox.getATan() * 100);
+        //shapeRendered.begin(ShapeRenderer.ShapeType.Line);
+        //shapeRendered.setColor(0, 1, 0, 1);
+        //shapeRendered.line(lineHitBox.getX1(), lineHitBox.getY1(), lineHitBox.getX2(), lineHitBox.getY2());
+        //shapeRendered.end();
+    }
+
+    public class Wheel implements Draw {
+        private Rectangle rectangle;
+        private Image wheel;
+
+        Wheel(float x, int size) {
+            rectangle = new Rectangle(x, RoadHitBox.findLineHitBox(x).findY(x), size, size);
+            wheel = new Image(new Texture("wheel.png")) {{
+                setPosition(rectangle.x, rectangle.y);
+                setWidth(rectangle.width + 5);
+                setHeight(rectangle.height);
+            }};
+        }
+
+        public Image getWheel() {
+            return wheel;
+        }
+
+        public Rectangle getRectangle() {
+            return rectangle;
+        }
+
+        @Override
+        public void draw() {
+            wheel.setPosition(rectangle.x - 3, rectangle.y);
+            //shapeRendered.begin(ShapeRenderer.ShapeType.Line);
+            //shapeRendered.setColor(0, 1, 0, 1);
+            // shapeRendered.rect(rectangle.x, rectangle.y, rectangle.width, rectangle.height);
+            //  shapeRendered.end();
+        }
     }
 }

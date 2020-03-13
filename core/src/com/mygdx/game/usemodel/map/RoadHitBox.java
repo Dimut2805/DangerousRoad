@@ -6,7 +6,6 @@ public class RoadHitBox {
 
     public static LineHitBox[] getLinesHitBoxes() {
         return new LineHitBox[]{
-                new LineHitBox(100, 250, 100, 600),
                 new LineHitBox(100, 250, 200, 261),
                 new LineHitBox(200, 261, 285, 250),
                 new LineHitBox(285, 250, 430, 210),

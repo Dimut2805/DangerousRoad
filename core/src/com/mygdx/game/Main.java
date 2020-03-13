@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.mygdx.game.model.car.Car;
 import com.mygdx.game.model.map.Map;
 import com.mygdx.game.usemodel.car.RelationshipCar;
 import com.mygdx.game.usemodel.map.RoadHitBox;
@@ -21,8 +20,7 @@ public class Main extends ApplicationAdapter {
     @Override
     public void create() {
         stage = new Stage(new ScreenViewport());
-        camera = new OrthographicCamera();
-        camera.setToOrtho(false, 800, 400);
+        camera = new OrthographicCamera(100,100);
         relationshipCar = new RelationshipCar(110, 300, 100);
         map = new Map();
     }
@@ -35,6 +33,7 @@ public class Main extends ApplicationAdapter {
         map.draw();
         RoadHitBox.showRoadHitBox();
         relationshipCar.drawCar();
+        stage.addActor(relationshipCar.getCar().getCarImage());
         stage.addActor(relationshipCar.getCar().getLeftWheel().getWheel());
         stage.addActor(relationshipCar.getCar().getRightWheel().getWheel());
         stage.draw();

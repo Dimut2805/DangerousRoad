@@ -1,18 +1,13 @@
 package com.mygdx.game.usemodel.car;
 
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.mygdx.game.model.car.Car;
-import com.mygdx.game.model.map.LineHitBox;
 import com.mygdx.game.usemodel.map.RoadHitBox;
 
 public class RelationshipCar {
     private Car car;
-    private boolean onLand;
-    private LineHitBox lineOnLand_Right;
     private int speed = 1;
 
     public RelationshipCar(int x, int width, int height) {
-        onLand = false;
         car = new Car(x, width, height);
     }
 
@@ -43,7 +38,7 @@ public class RelationshipCar {
 
 
     public void moveLeft() {
-        if (car.getLeftWheel().getRectangle().x > 100) {
+        if (car.getLeftWheel().getWheel().getX() > 100) {
             //Движение левого колеса
             car.getLeftWheel().getRectangle().x -= speed;
             car.getLeftWheel().getRectangle()
