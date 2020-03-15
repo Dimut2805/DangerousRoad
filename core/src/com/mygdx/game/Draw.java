@@ -7,5 +7,4 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 public interface Draw {
     ShapeRenderer shapeRendered = new ShapeRenderer();
     Batch batch = new SpriteBatch();
-    void draw();
 }
