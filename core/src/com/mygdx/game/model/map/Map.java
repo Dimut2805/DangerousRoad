@@ -10,7 +10,6 @@ public class Map implements Draw {
         mapTexture = new Texture("road.png");
     }
 
-    @Override
     public void draw() {
         batch.begin();
         batch.draw(mapTexture, 0, -100,8000,1000);

@@ -15,6 +15,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.mygdx.game.model.car.Car;
 import com.mygdx.game.model.map.Map;
 import com.mygdx.game.usemodel.car.RelationshipCar;
 import com.mygdx.game.usemodel.map.RoadHitBox;
@@ -30,16 +31,13 @@ public class Main extends ApplicationAdapter {
     private OrthographicCamera camera;
     private Stage stage;
     private Map map;
-    private RelationshipCar relationshipCar;
-    private Sprite sprite;
-
+    private Car car;
 
     @Override
     public void create() {
         stage = new Stage(new ScreenViewport());
-        camera = new OrthographicCamera();
-        camera.setToOrtho(false, 800, 400);
-        relationshipCar = new RelationshipCar(110, 300, 100);
+        camera = new OrthographicCamera(100, 100);
+        car = new Car(110, 300, 100);
         map = new Map();
     }
 
@@ -52,11 +50,13 @@ public class Main extends ApplicationAdapter {
         camera.update();
         map.draw();
         RoadHitBox.showRoadHitBox();
-        relationshipCar.drawCar();
-        stage.addActor(relationshipCar.getCar().getCarImage());
-        stage.addActor(relationshipCar.getCar().getLeftWheel().getWheel());
-        stage.addActor(relationshipCar.getCar().getRightWheel().getWheel());
+        car.render();
+        stage.addActor(car.getCarImage());
+        stage.addActor(car.getLeftWheel().getWheel());
+        stage.addActor(car.getRightWheel().getWheel());
         stage.draw();
+        if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) car.moveLeft();
+        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) car.moveRight();
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) relationshipCar.moveLeft();
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) relationshipCar.moveRight();
 

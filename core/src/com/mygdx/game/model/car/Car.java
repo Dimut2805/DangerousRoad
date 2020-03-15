@@ -8,7 +8,6 @@ import com.mygdx.game.Draw;
 import com.mygdx.game.model.map.LineHitBox;
 import com.mygdx.game.usemodel.map.RoadHitBox;
 
-
 public class Car implements Draw {
     private Rectangle body;
     private Wheel leftWheel;
@@ -32,10 +31,15 @@ public class Car implements Draw {
         return car;
     }
 
-    public Rectangle getBody() {
-        return body;
+    public void moveRight() {
+        leftWheel.moveRight();
+        rightWheel.moveRight();
     }
 
+    public void moveLeft() {
+        leftWheel.moveLeft();
+        rightWheel.moveLeft();
+    }
 
     public Wheel getRightWheel() {
         return rightWheel;
@@ -45,20 +49,19 @@ public class Car implements Draw {
         return leftWheel;
     }
 
-    @Override
-    public void draw() {
-        leftWheel.draw();
-        rightWheel.draw();
+    public void render() {
+        leftWheel.render();
+        rightWheel.render();
         lineHitBox.setPosition(leftWheel.getRectangle().x - 30, leftWheel.getRectangle().y + 50, rightWheel.getRectangle().x + 50 + 30, rightWheel.getRectangle().y + 50);
         car.setPosition(lineHitBox.getX1(), lineHitBox.getY1() - 23);
         car.setRotation(lineHitBox.getATan() * 100);
-        //shapeRendered.begin(ShapeRenderer.ShapeType.Line);
-        //shapeRendered.setColor(0, 1, 0, 1);
-        //shapeRendered.line(lineHitBox.getX1(), lineHitBox.getY1(), lineHitBox.getX2(), lineHitBox.getY2());
-        //shapeRendered.end();
+        shapeRendered.begin(ShapeRenderer.ShapeType.Line);
+        shapeRendered.setColor(0, 1, 0, 1);
+        shapeRendered.line(lineHitBox.getX1(), lineHitBox.getY1(), lineHitBox.getX2(), lineHitBox.getY2());
+        shapeRendered.end();
     }
 
-    public class Wheel implements Draw {
+    public class Wheel implements Draw{
         private Rectangle rectangle;
         private Image wheel;
 
@@ -79,13 +82,30 @@ public class Car implements Draw {
             return rectangle;
         }
 
-        @Override
-        public void draw() {
+        public void render() {
             wheel.setPosition(rectangle.x - 3, rectangle.y);
-            //shapeRendered.begin(ShapeRenderer.ShapeType.Line);
-            //shapeRendered.setColor(0, 1, 0, 1);
-            // shapeRendered.rect(rectangle.x, rectangle.y, rectangle.width, rectangle.height);
-            //  shapeRendered.end();
+            shapeRendered.begin(ShapeRenderer.ShapeType.Line);
+            shapeRendered.setColor(0, 1, 0, 1);
+            shapeRendered.rect(rectangle.x, rectangle.y, rectangle.width, rectangle.height);
+            shapeRendered.end();
+        }
+
+        public void moveRight() {
+            rectangle.x += 1;
+            rectangle
+                    .setY(RoadHitBox.findLineHitBox(wheel.getX())
+                            .findY(wheel.getX()));
+            wheel.setOrigin(wheel.getWidth() / 2, wheel.getHeight() / 2);
+            wheel.rotateBy(-15);
+        }
+
+        public void moveLeft() {
+            rectangle.x -= 1;
+            rectangle
+                    .setY(RoadHitBox.findLineHitBox(wheel.getX())
+                            .findY(wheel.getX()));
+            wheel.setOrigin(wheel.getWidth() / 2, wheel.getHeight() / 2);
+            wheel.rotateBy(15);
         }
     }
 }
