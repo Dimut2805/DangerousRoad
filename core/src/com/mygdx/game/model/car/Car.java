@@ -32,14 +32,14 @@ public class Car implements Draw {
         return car;
     }
 
-    public void moveRight(Camera camera) {
-        leftWheel.moveRight(camera);
-        rightWheel.moveRight(camera);
+    public void moveRight() {
+        leftWheel.moveRight();
+        rightWheel.moveRight();
     }
 
-    public void moveLeft(Camera camera) {
-        leftWheel.moveLeft(camera);
-        rightWheel.moveLeft(camera);
+    public void moveLeft() {
+        leftWheel.moveLeft();
+        rightWheel.moveLeft();
     }
 
     public Wheel getRightWheel() {
@@ -62,7 +62,7 @@ public class Car implements Draw {
         shapeRendered.end();
     }
 
-    public class Wheel implements Draw{
+    public class Wheel implements Draw {
         private Rectangle rectangle;
         private Image wheel;
 
@@ -91,8 +91,8 @@ public class Car implements Draw {
             shapeRendered.end();
         }
 
-        public void moveRight(Camera camera) {
-            camera.position.x += 1;
+        public void moveRight() {
+            rectangle.x += 1;
             rectangle
                     .setY(RoadHitBox.findLineHitBox(wheel.getX())
                             .findY(wheel.getX()));
@@ -100,8 +100,8 @@ public class Car implements Draw {
             wheel.rotateBy(-15);
         }
 
-        public void moveLeft(Camera camera) {
-            camera.position.x -= 1;
+        public void moveLeft() {
+            rectangle.x -= 1;
             rectangle
                     .setY(RoadHitBox.findLineHitBox(wheel.getX())
                             .findY(wheel.getX()));
