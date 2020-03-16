@@ -10,9 +10,9 @@ public class Map implements Draw {
         mapTexture = new Texture("road.png");
     }
 
-    public void draw() {
+    public void render() {
         batch.begin();
-        batch.draw(mapTexture, 0, -100,8000,1000);
+        batch.draw(mapTexture, 0, -65, 6000,900);
         batch.end();
     }
 }

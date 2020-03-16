@@ -1,5 +1,6 @@
 package com.mygdx.game.model.car;
 
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
@@ -31,14 +32,14 @@ public class Car implements Draw {
         return car;
     }
 
-    public void moveRight() {
-        leftWheel.moveRight();
-        rightWheel.moveRight();
+    public void moveRight(Camera camera) {
+        leftWheel.moveRight(camera);
+        rightWheel.moveRight(camera);
     }
 
-    public void moveLeft() {
-        leftWheel.moveLeft();
-        rightWheel.moveLeft();
+    public void moveLeft(Camera camera) {
+        leftWheel.moveLeft(camera);
+        rightWheel.moveLeft(camera);
     }
 
     public Wheel getRightWheel() {
@@ -90,8 +91,8 @@ public class Car implements Draw {
             shapeRendered.end();
         }
 
-        public void moveRight() {
-            rectangle.x += 1;
+        public void moveRight(Camera camera) {
+            camera.position.x += 1;
             rectangle
                     .setY(RoadHitBox.findLineHitBox(wheel.getX())
                             .findY(wheel.getX()));
@@ -99,8 +100,8 @@ public class Car implements Draw {
             wheel.rotateBy(-15);
         }
 
-        public void moveLeft() {
-            rectangle.x -= 1;
+        public void moveLeft(Camera camera) {
+            camera.position.x -= 1;
             rectangle
                     .setY(RoadHitBox.findLineHitBox(wheel.getX())
                             .findY(wheel.getX()));

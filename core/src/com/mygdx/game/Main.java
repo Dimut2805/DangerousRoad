@@ -1,41 +1,27 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.ApplicationAdapter;
-import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.GL30;
-import com.badlogic.gdx.graphics.Mesh;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.VertexAttribute;
-import com.badlogic.gdx.graphics.VertexAttributes;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.model.car.Car;
 import com.mygdx.game.model.map.Map;
-import com.mygdx.game.usemodel.car.RelationshipCar;
 import com.mygdx.game.usemodel.map.RoadHitBox;
 
-import java.awt.Rectangle;
-
-import javax.swing.Spring;
-
 import static com.mygdx.game.Draw.batch;
-import static sun.audio.AudioPlayer.player;
 
 public class Main extends ApplicationAdapter {
     private OrthographicCamera camera;
-    private Stage stage;
+    private Stage carStage;
     private Map map;
     private Car car;
 
     @Override
     public void create() {
-        stage = new Stage(new ScreenViewport());
+        carStage = new Stage(new ScreenViewport());
         camera = new OrthographicCamera(100, 100);
         car = new Car(110, 300, 100);
         map = new Map();
@@ -43,40 +29,18 @@ public class Main extends ApplicationAdapter {
 
     @Override
     public void render() {
+        if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) car.moveLeft(camera);
+        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) car.moveRight(camera);
         camera.update();
         batch.setProjectionMatrix(camera.combined);
-        Gdx.graphics.getGL20().glClearColor(1, 0, 0, 1);
         Gdx.graphics.getGL20().glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
-        camera.update();
-        map.draw();
+        map.render();
         RoadHitBox.showRoadHitBox();
         car.render();
-        stage.addActor(car.getCarImage());
-        stage.addActor(car.getLeftWheel().getWheel());
-        stage.addActor(car.getRightWheel().getWheel());
-        stage.draw();
-        if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) car.moveLeft();
-        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) car.moveRight();
-        if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) relationshipCar.moveLeft();
-        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) relationshipCar.moveRight();
-
-        if (camera.position.x < relationshipCar.getCar().getLeftWheel().getRectangle().x) {
-            camera.position.set(relationshipCar.getCar().getLeftWheel().getRectangle().x, camera.position.y,0);
-            stage.getCamera().update();
-        }
-        if (camera.position.x > (relationshipCar.getCar().getLeftWheel().getRectangle().x)) {
-            camera.position.set(-(relationshipCar.getCar().getLeftWheel().getRectangle().x), camera.position.y,0);
-            stage.getCamera().update();
-        }
-        if (camera.position.y < (relationshipCar.getCar().getLeftWheel().getRectangle().y)) {
-            camera.position.set(camera.position.x, relationshipCar.getCar().getLeftWheel().getRectangle().y,0);
-            stage.getCamera().update();
-        }
-        if (camera.position.y > (relationshipCar.getCar().getLeftWheel().getRectangle().y)) {
-            camera.position.set(camera.position.x, -(relationshipCar.getCar().getLeftWheel().getRectangle().y),0);
-            stage.getCamera().update();
-        }
-
+        carStage.addActor(car.getCarImage());
+        carStage.addActor(car.getLeftWheel().getWheel());
+        carStage.addActor(car.getRightWheel().getWheel());
+        carStage.draw();
     }
 
 
