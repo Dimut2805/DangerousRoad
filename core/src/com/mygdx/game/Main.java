@@ -4,13 +4,20 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Mesh;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.VertexAttribute;
+import com.badlogic.gdx.graphics.VertexAttributes;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.model.car.Car;
 import com.mygdx.game.model.map.Map;
 import com.mygdx.game.usemodel.map.RoadHitBox;
 
+import java.awt.Rectangle;
+
+import static com.badlogic.gdx.Gdx.gl;
 import static com.mygdx.game.Draw.batch;
 
 public class Main extends ApplicationAdapter {
@@ -29,8 +36,9 @@ public class Main extends ApplicationAdapter {
 
     @Override
     public void render() {
-        if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) car.moveLeft(camera);
-        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) car.moveRight(camera);
+        camera.position.set(car.getRightWheel().getRectangle().x, car.getRightWheel().getRectangle().y, 0);
+        if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) car.moveLeft();
+        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) car.moveRight();
         camera.update();
         batch.setProjectionMatrix(camera.combined);
         Gdx.graphics.getGL20().glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
