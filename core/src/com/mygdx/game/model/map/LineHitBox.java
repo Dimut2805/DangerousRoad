@@ -47,7 +47,7 @@ public class LineHitBox {
 
     public void showLine() {
         shapeRendered.begin(ShapeRenderer.ShapeType.Line);
-        shapeRendered.setColor(1, 0, 0, 1);
+        shapeRendered.setColor(0, 0, 0, 1);
         shapeRendered.line(x1, y1, x2, y2);
         shapeRendered.end();
     }

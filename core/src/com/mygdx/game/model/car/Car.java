@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.mygdx.game.Draw;
 import com.mygdx.game.model.map.LineHitBox;
+import com.mygdx.game.model.map.Road;
 import com.mygdx.game.usemodel.map.RoadHitBox;
 
 public class Car implements Draw {
@@ -14,9 +15,11 @@ public class Car implements Draw {
     private Wheel rightWheel;
     private Image car;
     private LineHitBox lineHitBox;
+    private Road road;
 
-    public Car(float x, final float width, final float height) {
-        body = new Rectangle(x, RoadHitBox.findLineHitBox(x).findY(x), width, height);
+    public Car(float x, final float width, final float height, Road road) {
+        this.road = road;
+        body = new Rectangle(x, RoadHitBox.findLineHitBox(x, road).findY(x), width, height);
         leftWheel = new Wheel(body.x + 33, 50);
         rightWheel = new Wheel(body.x + body.width - 30 - 50, 50);
         lineHitBox = new LineHitBox(leftWheel.getWheel().getX(), leftWheel.getWheel().getY() + 50, rightWheel.getWheel().getX() + 50, rightWheel.getWheel().getY() + 50);
@@ -66,7 +69,7 @@ public class Car implements Draw {
         private Image wheel;
 
         Wheel(float x, int size) {
-            rectangle = new Rectangle(x, RoadHitBox.findLineHitBox(x).findY(x), size, size);
+            rectangle = new Rectangle(x, RoadHitBox.findLineHitBox(x, road).findY(x), size, size);
             wheel = new Image(new Texture("wheel.png")) {{
                 setPosition(rectangle.x, rectangle.y);
                 setWidth(rectangle.width + 5);
@@ -93,7 +96,7 @@ public class Car implements Draw {
         public void moveRight() {
             rectangle.x += 1;
             rectangle
-                    .setY(RoadHitBox.findLineHitBox(wheel.getX())
+                    .setY(RoadHitBox.findLineHitBox(wheel.getX(), road)
                             .findY(wheel.getX()));
             wheel.setOrigin(wheel.getWidth() / 2, wheel.getHeight() / 2);
             wheel.rotateBy(-15);
@@ -102,7 +105,7 @@ public class Car implements Draw {
         public void moveLeft() {
             rectangle.x -= 1;
             rectangle
-                    .setY(RoadHitBox.findLineHitBox(wheel.getX())
+                    .setY(RoadHitBox.findLineHitBox(wheel.getX(), road)
                             .findY(wheel.getX()));
             wheel.setOrigin(wheel.getWidth() / 2, wheel.getHeight() / 2);
             wheel.rotateBy(15);
