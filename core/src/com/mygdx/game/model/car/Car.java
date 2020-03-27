@@ -4,18 +4,19 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.mygdx.game.Draw;
 import com.mygdx.game.model.map.LineHitBox;
 import com.mygdx.game.model.map.Road;
 import com.mygdx.game.usemodel.map.RoadHitBox;
 
-public class Car implements Draw {
+public class Car {
+    ShapeRenderer shapeRendered = new ShapeRenderer();
     private Rectangle body;
     private Wheel leftWheel;
     private Wheel rightWheel;
     private Image car;
     private LineHitBox lineHitBox;
     private Road road;
+    private float BASE_Y = 300;
 
     public Car(float x, final float width, final float height, Road road) {
         this.road = road;
@@ -35,13 +36,17 @@ public class Car implements Draw {
     }
 
     public void moveRight() {
-        leftWheel.moveRight();
-        rightWheel.moveRight();
+        moveRoadRight(10);
+        leftWheel.rotateRight();
+        rightWheel.rotateRight();
     }
 
     public void moveLeft() {
-        leftWheel.moveLeft();
-        rightWheel.moveLeft();
+        if (road.getLineHitBoxes()[0].getX1() < 110) {
+            moveRoadLeft(10);
+            leftWheel.rotateLeft();
+            rightWheel.rotateLeft();
+        }
     }
 
     public Wheel getRightWheel() {
@@ -50,6 +55,19 @@ public class Car implements Draw {
 
     public Wheel getLeftWheel() {
         return leftWheel;
+    }
+
+    private void moveRoadRight(float speed) {
+        float y = 0;
+        for (LineHitBox lineHitBox : road.getLineHitBoxes()) {
+            lineHitBox.setPosition(lineHitBox.getX1() - speed, lineHitBox.getY1(), lineHitBox.getX2() - speed, lineHitBox.getY2());
+        }
+    }
+
+    private void moveRoadLeft(float speed) {
+        for (LineHitBox lineHitBox : road.getLineHitBoxes()) {
+            lineHitBox.setPosition(lineHitBox.getX1() + speed, lineHitBox.getY1(), lineHitBox.getX2() + speed, lineHitBox.getY2());
+        }
     }
 
     public void render() {
@@ -64,7 +82,8 @@ public class Car implements Draw {
         shapeRendered.end();
     }
 
-    public class Wheel implements Draw {
+    public class Wheel {
+        ShapeRenderer shapeRendered = new ShapeRenderer();
         private Rectangle rectangle;
         private Image wheel;
 
@@ -77,6 +96,7 @@ public class Car implements Draw {
             }};
         }
 
+
         public Image getWheel() {
             return wheel;
         }
@@ -86,6 +106,17 @@ public class Car implements Draw {
         }
 
         public void render() {
+            if (wheel.getY() != 200) {
+                if (wheel.getY() > 200) {
+                    transferRoadDown();
+                }
+                if (wheel.getY() < 200) {
+                    transferRoadUp();
+                }
+            }
+            rectangle
+                    .setY(RoadHitBox.findLineHitBox(wheel.getX(), road)
+                            .findY(wheel.getX()));
             wheel.setPosition(rectangle.x - 3, rectangle.y);
             shapeRendered.begin(ShapeRenderer.ShapeType.Line);
             shapeRendered.setColor(0, 1, 0, 1);
@@ -93,22 +124,26 @@ public class Car implements Draw {
             shapeRendered.end();
         }
 
-        public void moveRight() {
-            rectangle.x += 1;
-            rectangle
-                    .setY(RoadHitBox.findLineHitBox(wheel.getX(), road)
-                            .findY(wheel.getX()));
+        public void rotateRight() {
             wheel.setOrigin(wheel.getWidth() / 2, wheel.getHeight() / 2);
             wheel.rotateBy(-15);
         }
 
-        public void moveLeft() {
-            rectangle.x -= 1;
-            rectangle
-                    .setY(RoadHitBox.findLineHitBox(wheel.getX(), road)
-                            .findY(wheel.getX()));
+        public void rotateLeft() {
             wheel.setOrigin(wheel.getWidth() / 2, wheel.getHeight() / 2);
             wheel.rotateBy(15);
+        }
+
+        private void transferRoadUp() {
+            for (LineHitBox lineHitBox : road.getLineHitBoxes()) {
+                lineHitBox.setPosition(lineHitBox.getX1(), lineHitBox.getY1() + 1, lineHitBox.getX2(), lineHitBox.getY2() + 1);
+            }
+        }
+
+        private void transferRoadDown() {
+            for (LineHitBox lineHitBox : road.getLineHitBoxes()) {
+                lineHitBox.setPosition(lineHitBox.getX1(), lineHitBox.getY1() - 1, lineHitBox.getX2(), lineHitBox.getY2() - 1);
+            }
         }
     }
 }

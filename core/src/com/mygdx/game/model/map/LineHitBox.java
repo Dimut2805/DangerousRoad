@@ -45,6 +45,14 @@ public class LineHitBox {
         return y2;
     }
 
+    public void setY1(float y1) {
+        this.y1 = y1;
+    }
+
+    public void setY2(float y2) {
+        this.y2 = y2;
+    }
+
     public void showLine() {
         shapeRendered.begin(ShapeRenderer.ShapeType.Line);
         shapeRendered.setColor(0, 0, 0, 1);
