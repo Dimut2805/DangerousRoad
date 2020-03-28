@@ -30,7 +30,7 @@ public class Main extends ApplicationAdapter {
         Gdx.input.setInputProcessor(myInput);
         obstacles = new Obstacles(car);
         pedal = new Pedal();
-        //new Track("Пчеловод.mp3").play();
+        new Track("Пчеловод.mp3").play();
     }
 
     private void buildCar() {
