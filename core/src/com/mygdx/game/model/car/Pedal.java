@@ -46,10 +46,12 @@ public class Pedal implements Draw {
         Rectangle rectangle = new Rectangle(touchPosition.x,touchPosition.y,1,1);
         if (leftPedal.overlaps(rectangle)){
             car.moveLeft();
+            car.setIsMove(true);
         }
 
         if(rightPedal.overlaps(rectangle)){
             car.moveRight();
+            car.setIsMove(true);
         }
     }
 }

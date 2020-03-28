@@ -53,12 +53,12 @@ public class Main extends ApplicationAdapter {
         car.render();
         buildCar();
         carStage.draw();
-        obstacles.render();
         if (Gdx.input.isTouched()) {
             touchPos = new Vector3();
             touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
             pedal.move(touchPos,car);
         }
+        obstacles.render();
         pedal.render();
     }
 
