@@ -31,9 +31,11 @@ public class MyInput implements InputProcessor {
         switch (keycode) {
             case Input.Keys.LEFT:
                 car.setIsMove(false);
+                car.setSpeed(0);
                 break;
             case Input.Keys.RIGHT:
                 car.setIsMove(false);
+                car.setSpeed(0);
                 break;
         }
         return false;

@@ -28,9 +28,10 @@ public class Main extends ApplicationAdapter {
         pedalLeftStage = new Stage(new ScreenViewport());
         pedalRightStage = new Stage(new ScreenViewport());
         road = new Road();
-        car = new Car(110, 300, 100, road);
+        car = new Car(200, 300, 100, road);
         myInput = new MyInput(car);
         Gdx.input.setInputProcessor(myInput);
+        new Track("Пчеловод.mp3").play();
         //pedalLeft = new Pedals().pedalLeft(50,1,150);
         //pedalRight = new Pedals().pedalRight(500,1,150);
     }

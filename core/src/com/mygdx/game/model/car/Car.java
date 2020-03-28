@@ -71,18 +71,10 @@ public class Car {
                 speed += 1;
             }
         }
-        if (speed != 0) {
-            if (!isMove && (isRight || isLeft)) {
-                speed -= 0.5;
-                rotateWheel--;
-                if (isLeft) {
-                    moveLeft();
-                }
-                if (isRight) {
-                    moveRight();
-                }
-            }
-        }
+    }
+
+    public void setSpeed(float speed) {
+        this.speed = speed;
     }
 
     public Wheel getRightWheel() {
