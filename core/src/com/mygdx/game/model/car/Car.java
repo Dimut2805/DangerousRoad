@@ -16,9 +16,15 @@ public class Car {
     private Image car;
     private LineHitBox lineHitBox;
     private Road road;
-    private float BASE_Y = 300;
+    private float speed, rotateWheel;
+    private boolean isMove, isRight, isLeft;
 
     public Car(float x, final float width, final float height, Road road) {
+        rotateWheel = 3;
+        isLeft = false;
+        isLeft = false;
+        isMove = false;
+        speed = 0;
         this.road = road;
         body = new Rectangle(x, RoadHitBox.findLineHitBox(x, road).findY(x), width, height);
         leftWheel = new Wheel(body.x + 33, 50);
@@ -31,21 +37,56 @@ public class Car {
         }};
     }
 
+    public void setIsMove(boolean isMove) {
+        this.isMove = isMove;
+    }
+
     public Image getCarImage() {
         return car;
     }
 
     public void moveRight() {
-        moveRoadRight(10);
+        moveRoadRight(speed);
         leftWheel.rotateRight();
         rightWheel.rotateRight();
     }
 
     public void moveLeft() {
         if (road.getLineHitBoxes()[0].getX1() < 110) {
-            moveRoadLeft(10);
+            moveRoadLeft(speed);
             leftWheel.rotateLeft();
             rightWheel.rotateLeft();
+        }
+    }
+
+    public void setIsRight(boolean isRight) {
+        this.isRight = isRight;
+    }
+
+    public void setIsLeft(boolean isLeft) {
+        this.isLeft = isLeft;
+    }
+
+    private void speedUp() {
+        if (isMove) {
+            if (rotateWheel < 15) {
+                rotateWheel+=0.5;
+            }
+            if (speed < 7) {
+                speed += 1;
+            }
+        }
+        if (speed != 0) {
+            if (!isMove && (isRight || isLeft)) {
+                speed -= 0.5;
+                rotateWheel--;
+                if (isLeft) {
+                    moveLeft();
+                }
+                if (isRight) {
+                    moveRight();
+                }
+            }
         }
     }
 
@@ -58,7 +99,6 @@ public class Car {
     }
 
     private void moveRoadRight(float speed) {
-        float y = 0;
         for (LineHitBox lineHitBox : road.getLineHitBoxes()) {
             lineHitBox.setPosition(lineHitBox.getX1() - speed, lineHitBox.getY1(), lineHitBox.getX2() - speed, lineHitBox.getY2());
         }
@@ -71,6 +111,7 @@ public class Car {
     }
 
     public void render() {
+        speedUp();
         leftWheel.render();
         rightWheel.render();
         lineHitBox.setPosition(leftWheel.getRectangle().x - 30, leftWheel.getRectangle().y + 50, rightWheel.getRectangle().x + 50 + 30, rightWheel.getRectangle().y + 50);
@@ -126,12 +167,12 @@ public class Car {
 
         public void rotateRight() {
             wheel.setOrigin(wheel.getWidth() / 2, wheel.getHeight() / 2);
-            wheel.rotateBy(-15);
+            wheel.rotateBy(-rotateWheel);
         }
 
         public void rotateLeft() {
             wheel.setOrigin(wheel.getWidth() / 2, wheel.getHeight() / 2);
-            wheel.rotateBy(15);
+            wheel.rotateBy(rotateWheel);
         }
 
         private void transferRoadUp() {

@@ -4,17 +4,12 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.model.car.Car;
 import com.mygdx.game.model.car.Pedals;
-import com.mygdx.game.model.map.LineHitBox;
 import com.mygdx.game.model.map.Road;
 import com.mygdx.game.usemodel.map.RoadHitBox;
-
-import static com.mygdx.game.Draw.batch;
 
 public class Main extends ApplicationAdapter {
     private Stage carStage;
@@ -24,6 +19,7 @@ public class Main extends ApplicationAdapter {
     private Pedals pedalLeft;
     private Pedals pedalRight;
     private Road road;
+    private MyInput myInput;
 
     @Override
     public void create() {
@@ -32,17 +28,17 @@ public class Main extends ApplicationAdapter {
         pedalRightStage = new Stage(new ScreenViewport());
         road = new Road();
         car = new Car(110, 300, 100, road);
+        myInput = new MyInput(car);
+        Gdx.input.setInputProcessor(myInput);
         //pedalLeft = new Pedals().pedalLeft(50,1,150);
         //pedalRight = new Pedals().pedalRight(500,1,150);
     }
 
     @Override
     public void render() {
-        if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) car.moveLeft();
-        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) car.moveRight();
-        //camera.position.set(car.getRightWheel().getRectangle().x, car.getRightWheel().getRectangle().y, 0);
-       // if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) car.moveLeft();
-        //if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) car.moveRight();
+
+         if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) car.moveLeft();
+         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) car.moveRight();
         Gdx.gl.glClearColor(0, 235, 103, 1);
         Gdx.graphics.getGL20().glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
         RoadHitBox.showRoadHitBox(road);
