@@ -52,6 +52,9 @@ public class Car {
     }
 
     public void moveLeft() {
+        if(road.getLineHitBoxes()[road.getLineHitBoxes().length-1].getX1() <= rightWheel.getRectangle().x+10) {
+            System.out.println("Финиш");
+        }
         if (road.getLineHitBoxes()[0].getX1() < 110) {
             moveRoadLeft(speed);
             leftWheel.rotateLeft();
