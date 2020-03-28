@@ -32,12 +32,28 @@ public class Car {
         }};
     }
 
+    public Rectangle getBody() {
+        return body;
+    }
+
     public void setIsMove(boolean isMove) {
         this.isMove = isMove;
     }
 
     public Image getCarImage() {
         return car;
+    }
+
+    public float getSpeed() {
+        return speed;
+    }
+
+    public boolean isRight() {
+        return isRight;
+    }
+
+    public boolean isLeft() {
+        return isLeft;
     }
 
     public void moveRight() {
@@ -62,6 +78,10 @@ public class Car {
         this.isLeft = isLeft;
     }
 
+    public boolean isMove() {
+        return isMove;
+    }
+
     private void speedUp() {
         if (isMove) {
             if (rotateWheel < 15) {
@@ -69,18 +89,6 @@ public class Car {
             }
             if (speed < 7) {
                 speed += 1;
-            }
-        }
-        if (speed != 0) {
-            if (!isMove && (isRight || isLeft)) {
-                speed -= 0.5;
-                rotateWheel--;
-                if (isLeft) {
-                    moveLeft();
-                }
-                if (isRight) {
-                    moveRight();
-                }
             }
         }
     }

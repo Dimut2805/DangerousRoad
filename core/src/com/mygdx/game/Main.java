@@ -20,6 +20,7 @@ public class Main extends ApplicationAdapter {
     private Pedals pedalRight;
     private Road road;
     private MyInput myInput;
+    private Obstacles obstacles;
 
 
     @Override
@@ -29,6 +30,7 @@ public class Main extends ApplicationAdapter {
         pedalRightStage = new Stage(new ScreenViewport());
         road = new Road();
         car = new Car(110, 300, 100, road);
+        obstacles = new Obstacles(car);
         myInput = new MyInput(car);
         Gdx.input.setInputProcessor(myInput);
         //pedalLeft = new Pedals().pedalLeft(50,1,150);
@@ -57,6 +59,7 @@ public class Main extends ApplicationAdapter {
         // pedalRightStage.addActor(pedalRight.getPedalR());
         buildCar();
         carStage.draw();
+        obstacles.render();
         pedalRightStage.draw();
         pedalLeftStage.draw();
     }
