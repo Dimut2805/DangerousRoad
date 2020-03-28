@@ -14,22 +14,17 @@ public class Car {
     private Wheel leftWheel;
     private Wheel rightWheel;
     private Image car;
-    private LineHitBox lineHitBox;
+    private LineHitBox carBodyLineHitBox;
     private Road road;
-    private float speed, rotateWheel;
-    private boolean isMove, isRight, isLeft;
+    private float speed = 0, rotateWheel = 3;
+    private boolean isMove = false, isRight = false, isLeft = false;
 
     public Car(float x, final float width, final float height, Road road) {
-        rotateWheel = 3;
-        isLeft = false;
-        isLeft = false;
-        isMove = false;
-        speed = 0;
         this.road = road;
         body = new Rectangle(x, RoadHitBox.findLineHitBox(x, road).findY(x), width, height);
         leftWheel = new Wheel(body.x + 33, 50);
         rightWheel = new Wheel(body.x + body.width - 30 - 50, 50);
-        lineHitBox = new LineHitBox(leftWheel.getWheel().getX(), leftWheel.getWheel().getY() + 50, rightWheel.getWheel().getX() + 50, rightWheel.getWheel().getY() + 50);
+        carBodyLineHitBox = new LineHitBox(leftWheel.getWheel().getX(), leftWheel.getWheel().getY() + 50, rightWheel.getWheel().getX() + 50, rightWheel.getWheel().getY() + 50);
         car = new Image(new Texture("car.png")) {{
             setPosition(leftWheel.getRectangle().x, leftWheel.getRectangle().y);
             setWidth(width);
@@ -52,9 +47,6 @@ public class Car {
     }
 
     public void moveLeft() {
-        if(road.getLineHitBoxes()[road.getLineHitBoxes().length-1].getX1() <= rightWheel.getRectangle().x+10) {
-            System.out.println("Финиш");
-        }
         if (road.getLineHitBoxes()[0].getX1() < 110) {
             moveRoadLeft(speed);
             leftWheel.rotateLeft();
@@ -73,7 +65,7 @@ public class Car {
     private void speedUp() {
         if (isMove) {
             if (rotateWheel < 15) {
-                rotateWheel+=0.5;
+                rotateWheel += 0.5;
             }
             if (speed < 7) {
                 speed += 1;
@@ -113,21 +105,37 @@ public class Car {
         }
     }
 
-    public void render() {
-        speedUp();
+    private void camera() {
+        if (rightWheel.getWheel().getY() != 200) {
+            if (rightWheel.getWheel().getY() > 200) {
+                road.transferRoadDown();
+            }
+            if (rightWheel.getWheel().getY() < 200) {
+                road.transferRoadUp();
+            }
+        }
+    }
+
+    private void drawWheels() {
         leftWheel.render();
         rightWheel.render();
-        lineHitBox.setPosition(leftWheel.getRectangle().x - 30, leftWheel.getRectangle().y + 50, rightWheel.getRectangle().x + 50 + 30, rightWheel.getRectangle().y + 50);
-        car.setPosition(lineHitBox.getX1(), lineHitBox.getY1() - 23);
-        car.setRotation(lineHitBox.getATan() * 100);
-        shapeRendered.begin(ShapeRenderer.ShapeType.Line);
+    }
+
+    public void render() {
+        camera();
+        drawWheels();
+        speedUp();
+        carBodyLineHitBox.setPosition(leftWheel.getRectangle().x - 30, leftWheel.getRectangle().y + 50, rightWheel.getRectangle().x + 50 + 30, rightWheel.getRectangle().y + 50);
+        car.setPosition(carBodyLineHitBox.getX1(), carBodyLineHitBox.getY1() - 23);
+        car.setRotation(carBodyLineHitBox.getATan() * 100);
+        /*shapeRendered.begin(ShapeRenderer.ShapeType.Line);
         shapeRendered.setColor(0, 1, 0, 1);
         shapeRendered.line(lineHitBox.getX1(), lineHitBox.getY1(), lineHitBox.getX2(), lineHitBox.getY2());
-        shapeRendered.end();
+        shapeRendered.end();*/
     }
 
     public class Wheel {
-        ShapeRenderer shapeRendered = new ShapeRenderer();
+        private ShapeRenderer shapeRendered = new ShapeRenderer();
         private Rectangle rectangle;
         private Image wheel;
 
@@ -149,23 +157,19 @@ public class Car {
             return rectangle;
         }
 
-        public void render() {
-            if (wheel.getY() != 200) {
-                if (wheel.getY() > 200) {
-                    transferRoadDown();
-                }
-                if (wheel.getY() < 200) {
-                    transferRoadUp();
-                }
-            }
+        private void installationY() {
             rectangle
                     .setY(RoadHitBox.findLineHitBox(wheel.getX(), road)
                             .findY(wheel.getX()));
+        }
+
+        public void render() {
+            installationY();
             wheel.setPosition(rectangle.x - 3, rectangle.y);
-            shapeRendered.begin(ShapeRenderer.ShapeType.Line);
+            /*shapeRendered.begin(ShapeRenderer.ShapeType.Line);
             shapeRendered.setColor(0, 1, 0, 1);
             shapeRendered.rect(rectangle.x, rectangle.y, rectangle.width, rectangle.height);
-            shapeRendered.end();
+            shapeRendered.end();*/
         }
 
         public void rotateRight() {
@@ -176,18 +180,6 @@ public class Car {
         public void rotateLeft() {
             wheel.setOrigin(wheel.getWidth() / 2, wheel.getHeight() / 2);
             wheel.rotateBy(rotateWheel);
-        }
-
-        private void transferRoadUp() {
-            for (LineHitBox lineHitBox : road.getLineHitBoxes()) {
-                lineHitBox.setPosition(lineHitBox.getX1(), lineHitBox.getY1() + 1, lineHitBox.getX2(), lineHitBox.getY2() + 1);
-            }
-        }
-
-        private void transferRoadDown() {
-            for (LineHitBox lineHitBox : road.getLineHitBoxes()) {
-                lineHitBox.setPosition(lineHitBox.getX1(), lineHitBox.getY1() - 1, lineHitBox.getX2(), lineHitBox.getY2() - 1);
-            }
         }
     }
 }

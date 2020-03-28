@@ -21,6 +21,7 @@ public class Main extends ApplicationAdapter {
     private Road road;
     private MyInput myInput;
 
+
     @Override
     public void create() {
         carStage = new Stage(new ScreenViewport());
@@ -34,20 +35,27 @@ public class Main extends ApplicationAdapter {
         //pedalRight = new Pedals().pedalRight(500,1,150);
     }
 
+    private void buildCar() {
+        carStage.addActor(car.getCarImage());
+        carStage.addActor(car.getLeftWheel().getWheel());
+        carStage.addActor(car.getRightWheel().getWheel());
+    }
+
     @Override
     public void render() {
-
-         if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) car.moveLeft();
-         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) car.moveRight();
+        if (Finish.isFinish(car, road)) {
+            System.out.println("Игра пройдена");
+            // TODO: 28.03.2020  
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) car.moveLeft();
+        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) car.moveRight();
         Gdx.gl.glClearColor(0, 235, 103, 1);
         Gdx.graphics.getGL20().glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
         RoadHitBox.showRoadHitBox(road);
         car.render();
         //pedalLeftStage.addActor(pedalLeft.getPedalL());
         // pedalRightStage.addActor(pedalRight.getPedalR());
-        carStage.addActor(car.getCarImage());
-        carStage.addActor(car.getLeftWheel().getWheel());
-        carStage.addActor(car.getRightWheel().getWheel());
+        buildCar();
         carStage.draw();
         pedalRightStage.draw();
         pedalLeftStage.draw();

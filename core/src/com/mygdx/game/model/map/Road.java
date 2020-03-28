@@ -1,12 +1,12 @@
 package com.mygdx.game.model.map;
 
 public class Road {
-   private LineHitBox[] lineHitBoxes;
+    private LineHitBox[] lineHitBoxes;
 
     public Road() {
         float x = 0, y = 200;
         lineHitBoxes = new LineHitBox[16];
-        lineHitBoxes[0] = new LineHitBox(0,200,0, 400);
+        lineHitBoxes[0] = new LineHitBox(0, 200, 0, 400);
         for (int i = 1; i < 16; i++) {
             lineHitBoxes[i] = new LineHitBox(x, y, x + 400 + (float) (Math.random() * 700), y - 150 + (float) (Math.random() * 300));
             x = lineHitBoxes[i].getX2();
@@ -16,5 +16,17 @@ public class Road {
 
     public LineHitBox[] getLineHitBoxes() {
         return lineHitBoxes;
+    }
+
+    public void transferRoadUp() {
+        for (LineHitBox lineHitBox : getLineHitBoxes()) {
+            lineHitBox.setPosition(lineHitBox.getX1(), lineHitBox.getY1() + 1, lineHitBox.getX2(), lineHitBox.getY2() + 1);
+        }
+    }
+
+    public void transferRoadDown() {
+        for (LineHitBox lineHitBox : getLineHitBoxes()) {
+            lineHitBox.setPosition(lineHitBox.getX1(), lineHitBox.getY1() - 1, lineHitBox.getX2(), lineHitBox.getY2() - 1);
+        }
     }
 }
