@@ -93,6 +93,10 @@ public class Car {
         }
     }
 
+    public void setSpeed(float speed) {
+        this.speed = speed;
+    }
+
     public Wheel getRightWheel() {
         return rightWheel;
     }

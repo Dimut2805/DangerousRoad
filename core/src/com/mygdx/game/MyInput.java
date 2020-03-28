@@ -32,10 +32,12 @@ public class MyInput implements InputProcessor {
             case Input.Keys.LEFT:
                 car.setIsMove(false);
                 car.setIsLeft(false);
+                car.setSpeed(0);
                 break;
             case Input.Keys.RIGHT:
-                car.setIsRight(false);
                 car.setIsMove(false);
+                car.setIsRight(false);
+                car.setSpeed(0);
                 break;
         }
         return false;
