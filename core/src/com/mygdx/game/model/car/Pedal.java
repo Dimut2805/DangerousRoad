@@ -10,7 +10,6 @@ import com.mygdx.game.Draw;
 import com.mygdx.game.model.car.Car;
 
 public class Pedal implements Draw {
-    private Vector3 touchPosition;
     private Texture pedalL;
     private Texture pedalR;
     private Batch batch;
@@ -25,13 +24,13 @@ public class Pedal implements Draw {
         leftPedal = new Rectangle();
         leftPedal.x = 50;
         leftPedal.y = 1;
-        leftPedal.width = 150;
-        leftPedal.height = 130;
+        leftPedal.width = 200;
+        leftPedal.height = Gdx.graphics.getHeight()-100;
         rightPedal = new Rectangle();
-        rightPedal.x = 500;
+        rightPedal.x = 600;
         rightPedal.y = 1;
-        rightPedal.height = 120;
-        rightPedal.width = 150;
+        rightPedal.height = Gdx.graphics.getHeight()-100;
+        rightPedal.width = 200;
     }
 
     public void render() {
@@ -39,10 +38,18 @@ public class Pedal implements Draw {
         batch.draw(pedalL,leftPedal.x,leftPedal.y,leftPedal.height,leftPedal.width);
         batch.draw(pedalR,rightPedal.x,rightPedal.y,rightPedal.height,rightPedal.width);
         batch.end();
-        if (Gdx.input.isTouched()){ touchPosition.set(Gdx.input.getX(), Gdx.input.getY(), 0);
-        if (leftPedal.contains(leftPedal)){
+
+    }
+
+    public void move(Vector3 touchPosition, Car car){
+        this.car = car;
+        Rectangle rectangle = new Rectangle(touchPosition.x,touchPosition.y,1,1);
+        if (leftPedal.overlaps(rectangle)){
             car.moveLeft();
         }
+
+        if(rightPedal.overlaps(rectangle)){
+            car.moveRight();
         }
     }
 }
