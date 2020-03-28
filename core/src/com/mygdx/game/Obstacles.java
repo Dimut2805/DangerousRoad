@@ -40,7 +40,7 @@ public class Obstacles {
     }
 
     public void moveRight() {
-        if (car.isRight() && car.isMove()) {
+        if (car.isRight()) {
             for (Stone stone : stoneArrayList) {
                 stone.getRectangle().x -= car.getSpeed();
             }
@@ -48,7 +48,7 @@ public class Obstacles {
     }
 
     public void moveLeft() {
-        if (car.isLeft() && car.isMove()) {
+        if (car.isLeft()) {
             for (Stone stone : stoneArrayList) {
                 stone.getRectangle().x += car.getSpeed();
             }
