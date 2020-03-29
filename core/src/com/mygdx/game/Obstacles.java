@@ -1,6 +1,9 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.mygdx.game.model.car.Car;
 
@@ -11,6 +14,9 @@ public class Obstacles {
     private long lastDropTime;
     private ArrayList<Stone> stoneArrayList;
     private Car car;
+    private SpriteBatch batch = new SpriteBatch();
+    private BitmapFont text = new BitmapFont();
+
 
     Obstacles(Car car) {
         this.car = car;
@@ -32,15 +38,19 @@ public class Obstacles {
                 iter.remove();
             }
             if(stone.getRectangle().overlaps(car.getBody())) {
-                System.out.println("game over");
-                // TODO: 28.03.2020  
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                System.exit(1);
             }
             stone.draw();
         }
     }
 
     public void moveRight() {
-        if (car.isRight()) {
+        if (car.isRight() && car.isMove()) {
             for (Stone stone : stoneArrayList) {
                 stone.getRectangle().x -= car.getSpeed();
             }
@@ -48,7 +58,7 @@ public class Obstacles {
     }
 
     public void moveLeft() {
-        if (car.isLeft()) {
+        if (car.isLeft() && car.isMove()) {
             for (Stone stone : stoneArrayList) {
                 stone.getRectangle().x += car.getSpeed();
             }

@@ -42,8 +42,12 @@ public class Main extends ApplicationAdapter {
     @Override
     public void render() {
         if (Finish.isFinish(car, road)) {
-            System.out.println("Игра пройдена");
-            // TODO: 28.03.2020
+            try {
+                Thread.sleep(3000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            System.exit(1);
         }
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) car.moveLeft();
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) car.moveRight();

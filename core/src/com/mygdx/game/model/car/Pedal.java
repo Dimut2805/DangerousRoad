@@ -1,6 +1,7 @@
 package com.mygdx.game.model.car;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -22,21 +23,21 @@ public class Pedal implements Draw {
         pedalR = new Texture("Pedal2.png");
         batch = new SpriteBatch();
         leftPedal = new Rectangle();
-        leftPedal.x = 50;
-        leftPedal.y = 1;
-        leftPedal.width = 200;
-        leftPedal.height = Gdx.graphics.getHeight()-100;
+        leftPedal.x = 100;
+        leftPedal.y = 880;
+        leftPedal.width = 150;
+        leftPedal.height = 1600;
         rightPedal = new Rectangle();
-        rightPedal.x = 600;
-        rightPedal.y = 1;
-        rightPedal.height = Gdx.graphics.getHeight()-100;
-        rightPedal.width = 200;
+        rightPedal.x = Gdx.graphics.getWidth()-300;
+        rightPedal.y = 880;
+        rightPedal.height = 1600;
+        rightPedal.width = 150;
     }
 
     public void render() {
         batch.begin();
-        batch.draw(pedalL,leftPedal.x,leftPedal.y,leftPedal.height,leftPedal.width);
-        batch.draw(pedalR,rightPedal.x,rightPedal.y,rightPedal.height,rightPedal.width);
+        batch.draw(pedalL,leftPedal.x,leftPedal.y-879,leftPedal.height-1500,leftPedal.width+50);
+        batch.draw(pedalR,rightPedal.x,rightPedal.y-879,rightPedal.height-1500,rightPedal.width+50);
         batch.end();
 
     }
