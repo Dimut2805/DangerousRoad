@@ -43,7 +43,7 @@ public class Obstacles {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                System.exit(1);
+                System.exit(0);
             }
             stone.draw();
         }

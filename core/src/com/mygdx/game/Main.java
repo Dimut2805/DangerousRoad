@@ -47,7 +47,7 @@ public class Main extends ApplicationAdapter {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            System.exit(1);
+            System.exit(0);
         }
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) car.moveLeft();
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) car.moveRight();
