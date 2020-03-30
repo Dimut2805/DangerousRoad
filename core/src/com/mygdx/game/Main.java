@@ -7,6 +7,8 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.mygdx.game.model.Stone;
+import com.mygdx.game.model.Track;
 import com.mygdx.game.model.car.Car;
 import com.mygdx.game.model.map.Road;
 import com.mygdx.game.model.car.Pedal;
