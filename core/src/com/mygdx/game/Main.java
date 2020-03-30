@@ -60,7 +60,7 @@ public class Main extends ApplicationAdapter {
         if (Gdx.input.isTouched()) {
             touchPos = new Vector3();
             touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
-            pedal.move(touchPos,car);
+            pedal.move(touchPos, car);
         }
         obstacles.render();
         pedal.render();
@@ -69,5 +69,8 @@ public class Main extends ApplicationAdapter {
 
     @Override
     public void dispose() {
+        for (Stone stone : obstacles.getStoneArrayList()) {
+            stone.getBatch().dispose();
+        }
     }
 }

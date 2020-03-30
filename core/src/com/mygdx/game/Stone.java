@@ -17,6 +17,10 @@ public class Stone {
         rectangle = new Rectangle(x, y, sizeStone, sizeStone);
     }
 
+    public Batch getBatch() {
+        return batch;
+    }
+
     public Rectangle getRectangle() {
         return rectangle;
     }

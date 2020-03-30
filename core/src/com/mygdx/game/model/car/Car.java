@@ -19,6 +19,10 @@ public class Car {
     private float speed = 0, rotateWheel = 3;
     private boolean isMove = false, isRight = false, isLeft = false;
 
+    public Image getCar() {
+        return car;
+    }
+
     public Car(float x, final float width, final float height, Road road) {
         this.road = road;
         body = new Rectangle(x, RoadHitBox.findLineHitBox(x, road).findY(x), width, height);

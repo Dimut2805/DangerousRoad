@@ -64,8 +64,13 @@ public class Obstacles {
             }
         }
     }
+
+    public ArrayList<Stone> getStoneArrayList() {
+        return stoneArrayList;
+    }
+
     void render() {
-        if (TimeUtils.nanoTime() - lastDropTime > 800000000) spawnObstacles();
+        if (TimeUtils.nanoTime() - lastDropTime > 800000000 && stoneArrayList.size() < 6) spawnObstacles();
         fall();
         moveLeft();
         moveRight();
